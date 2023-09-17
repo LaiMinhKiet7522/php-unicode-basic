@@ -4,143 +4,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Dropdown</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+    <title>Customer</title>
 
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-        }
-
-        li {
-            float: left;
-        }
-
-        li a,
-        .dropbtn {
-            display: inline-block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        li a:hover,
-        .dropdown:hover .dropbtn {
-            background-color: red;
-        }
-
-        li.dropdown {
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
 </head>
 
 <body>
     <?php
-    $menuArr = [
+    $customerArr = [
         [
-            'title' => 'Home',
-            'link' => '#',
-            'class' => '',
+            'name' => 'Minh Kiệt',
+            'email' => 'laiminhkiet07052002@gmail.com',
+            'phone' => '0376707091',
+            'address' => 'Ho Chi Minh city, Viet Nam',
         ],
+    
         [
-            'title' => 'News',
-            'link' => '#',
-            'class' => '',
+            'name' => 'Hoàng Phúc',
+            'email' => 'hoangphuc27052002@gmail.com',
+            'phone' => '0998877321',
+            'address' => 'Ho Chi Minh city, Viet Nam',
         ],
+
         [
-            'title' => 'Dropdown',
-            'link' => '#',
-            'class' => '',
-            'sub' => [
-                [
-                    'title' => 'Link 1',
-                    'link' => '#'
-                ],
-                [
-                    'title' => 'Link 2',
-                    'link' => '#'
-                ],
-                [
-                    'title' => 'Link 3',
-                    'link' => '#'
-                ],
-            ]
+            'name' => 'Hoàng Phúc',
+            'email' => 'hoangphuc27052002@gmail.com',
+            'phone' => '0998877321',
+            'address' => 'Ho Chi Minh city, Viet Nam',
         ],
+    
+        [
+            'name' => 'Vĩnh Thông',
+            'email' => 'vinhthong07082002@gmail.com',
+            'phone' => '0353218146',
+            'address' => 'Ho Chi Minh city, Viet Nam',
+        ],
+
+        [
+            'name' => 'Vĩnh Thông',
+            'email' => 'vinhthong07082002@gmail.com',
+            'phone' => '0353218146',
+            'address' => 'Ho Chi Minh city, Viet Nam',
+        ]
     ];
-    // echo '<pre>';
-    // print_r($menuArr);
-    // echo '</pre>';
-
-    if (!empty($menuArr)) {
-        echo '<ul>';
-
-        //foreach loop
-        foreach ($menuArr as $item) {
-            $class = !empty($item['class']) ? 'class = "' . $item['class'] . '"' : null;
-            $class = !empty($item['sub']) ? 'class="dropdown"' : $class;
-            echo '<li ' . $class . '> <a href="' . $item['link'] . '">' . $item['title'] . '</a>';
-
-            //Dropdown here
-            if (!empty($item['sub'])) {
-                $subMenu = $item['sub'];
-                echo '<div class="dropdown-content">';
-                foreach ($subMenu as $sub) {
-                    echo '<a href="' . $sub['link'] . '">' . $sub['title'] . '</a>';
+    if (!empty($customerArr)) {
+        //Tìm phần tư mảng trùng
+        $indexDuplicate = [];
+        for ($i = 0; $i < count($customerArr) - 1; $i++) {
+            for ($j = $i + 1; $j < count($customerArr); $j++) {
+                if ($customerArr[$i]['email'] == $customerArr[$j]['email']) {
+                    $indexDuplicate[] = $j;
                 }
-                echo '</div>';
             }
-
-            echo '</li>';
         }
-        echo '</ul>';
+    
+        //Xóa phần tử mảng trùng
+        if (!empty($indexDuplicate)) {
+            foreach ($indexDuplicate as $index) {
+                if (isset($customerArr[$index])) {
+                    unset($customerArr[$index]);
+                }
+            }
+        }
     }
     ?>
-    <!-- <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#news">News</a></li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
-            <div class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-            </div>
-        </li>
-    </ul> -->
+    <table width="100%" border="1" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th width="5%">STT</th>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Điện thoại</th>
+                <th>Địa chỉ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+                if(!empty($customerArr) && is_array($customerArr)):
+                    $count = 0;
+                    foreach($customerArr as $item):
+                        $count++;
+            ?>
+            <tr>
+                <td><?php echo $count; ?></td>
+                <td><?php echo $item['name']; ?></td>
+                <td><?php echo $item['email']; ?></td>
+                <td><?php echo $item['phone']; ?></td>
+                <td><?php echo $item['address']; ?></td>
+            </tr>
+            <?php 
+                endforeach;
+            else:
+            ?>
+            <tr>
+                <td colspan="5" style="text-align: center;">Không có dữ liệu</td>
+            </tr>
+            <?php 
+            endif;
+            ?>
+        </tbody>
+    </table>
 </body>
 
 </html>
