@@ -72,9 +72,14 @@ $menuArr = [
     ],
 ];
 
-$tree = getMenuTree($menuArr);
+// $tree = getMenuTree($menuArr);
+// echo '<pre>';
+// print_r($tree);
+// echo '</pre>';
+
+$childCategory = getChildCategories($menuArr, 3);
 echo '<pre>';
-print_r($tree);
+print_r($childCategory);
 echo '</pre>';
 ?>
 

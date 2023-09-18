@@ -55,4 +55,17 @@ function getMenuTree($menuArr, $parentId = 0, &$resultArr = [])
     }
     return $resultArr;
 }
+
+function getChildCategories($categoryArr, $parentId = 0, &$resultArr = [])
+{
+    if (!empty($categoryArr)) {
+        foreach ($categoryArr as $key => $item) {
+            if ($item['parent'] == $parentId) {
+                $resultArr[] = $item['id'];
+                getChildCategories($categoryArr, $item['id'], $resultArr);
+            }
+        }
+    }
+    return $resultArr;
+}
 ?>
