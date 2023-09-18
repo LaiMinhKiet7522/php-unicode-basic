@@ -72,7 +72,10 @@ $menuArr = [
     ],
 ];
 
-makeMenu($menuArr);
+$tree = getMenuTree($menuArr);
+echo '<pre>';
+print_r($tree);
+echo '</pre>';
 ?>
 
 <!-- <ul class="menu">

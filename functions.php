@@ -38,4 +38,21 @@ function makeMenu($menuArr, $parentId = 0, $isSub = false)
         echo '</ul>';
     }
 }
+
+function getMenuTree($menuArr, $parentId = 0, &$resultArr = [])
+{
+    if (!empty($menuArr)) {
+        foreach ($menuArr as $key => $item) {
+            if ($item['parent'] == $parentId) {
+                $resultArr[$key] = $item;
+                getMenuTree($menuArr, $item['id'], $resultArr[$key]['sub']);
+                if (empty($resultArr[$key]['sub'])) {
+                    unset($resultArr[$key]['sub']);
+                }
+                unset($menuArr[$key]);
+            }
+        }
+    }
+    return $resultArr;
+}
 ?>
