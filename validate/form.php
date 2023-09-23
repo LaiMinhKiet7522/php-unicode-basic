@@ -1,4 +1,5 @@
 <?php
+require_once 'function.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //Khai báo mảng errors để chứa lỗi
     $errors = [];
@@ -32,6 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ) {
             $errors['age']['invalid'] = 'Tuổi không hợp lệ';
         }
+    }
+
+    if(empty($errors)){
+       redirect('list.php?message=1');
     }
 }
 ?>
