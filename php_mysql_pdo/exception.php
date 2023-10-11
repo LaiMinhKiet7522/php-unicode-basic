@@ -8,7 +8,7 @@
  * */
 
 echo 'Học lập trình PHP <br/>';
-$age = 17;
+$age = 17;  
 try {
     //Tất cả code thực thi sẽ viết trong đây
     // unicode();
