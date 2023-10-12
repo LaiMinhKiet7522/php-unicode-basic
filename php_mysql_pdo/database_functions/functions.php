@@ -21,8 +21,22 @@ function insert($table, $dataInsert)
 {
     $keyArr = array_keys($dataInsert);
     $fieldStr = implode(', ', $keyArr);
-    $valueStr = ':'.implode(', :', $keyArr);
+    $valueStr = ':' . implode(', :', $keyArr);
 
-    $sql = 'INSERT INTO ' .$table.'('.$fieldStr.') VALUES('.$valueStr.')';
+    $sql = 'INSERT INTO ' . $table . '(' . $fieldStr . ') VALUES(' . $valueStr . ')';
     return query($sql, $dataInsert);
+}
+function update($table, $dataUpdate, $condition = '')
+{
+    $updateStr = '';
+    foreach ($dataUpdate as $key => $value) {
+        $updateStr .= $key . '=:' . $key . ', ';
+    }
+    $updateStr = rtrim($updateStr, ', ');
+    if (!empty($condition)) {
+        $sql = 'UPDATE ' . $table . ' SET ' . $updateStr . ' WHERE ' . $condition;
+    } else {
+        $sql = 'UPDATE ' . $table . ' SET ' . $updateStr;
+    }
+    return query($sql, $dataUpdate);
 }
