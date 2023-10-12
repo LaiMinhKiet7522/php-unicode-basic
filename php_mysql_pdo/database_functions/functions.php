@@ -40,3 +40,12 @@ function update($table, $dataUpdate, $condition = '')
     }
     return query($sql, $dataUpdate);
 }
+function delete($table, $condition)
+{
+    if (!empty($condition)) {
+        $sql = "DELETE FROM $table WHERE $condition";
+    } else {
+        $sql = "DELETE FROM $table";
+    }
+    return query($sql);
+}
