@@ -29,7 +29,6 @@ try {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION //Đẩy lỗi vào ngoại lệ khi truy vấn
         ];
         $conn = new PDO($dsn, _USER, _PASS, $options);
-        var_dump($conn);
     }
 } catch (Exception $e) {
     echo $e->getMessage() . '<br/>';
