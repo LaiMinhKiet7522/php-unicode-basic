@@ -1,5 +1,5 @@
 <?php
-function query($sql, $data = [])
+function query($sql, $data = [], $statementStatus = false)
 {
     global $conn;
     $query = false;
@@ -14,6 +14,9 @@ function query($sql, $data = [])
         echo $e->getMessage() . '<br/>';
         echo 'File: ' . $e->getFile() . ' - Line: ' . $e->getLine();
         echo '<br/>';
+    }
+    if ($statementStatus && $query) {
+        return $statement;
     }
     return $query;
 }
@@ -48,4 +51,46 @@ function delete($table, $condition)
         $sql = "DELETE FROM $table";
     }
     return query($sql);
+}
+
+//Lấy dữ liệu từ câu lệnh SQL - Lấy tất cả bản ghi
+function getRaw($sql)
+{
+    $statement = query($sql, [], true);
+    if (is_object($statement)) {
+        $dataFetch = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return  $dataFetch;
+    }
+    return false;
+}
+
+//Lấy dữ liệu từ câu lệnh SQL - Lấy 1 bản ghi
+function getfirstRaw($sql)
+{
+    $statement = query($sql, [], true);
+    if (is_object($statement)) {
+        $dataFetch = $statement->fetch(PDO::FETCH_ASSOC);
+        return $dataFetch;
+    }
+    return false;
+}
+
+//Lấy tất cả dữ liệu theo table, field, condition
+function getRecord($table, $field = '*', $condition = '')
+{
+    $sql = 'SELECT ' . $field . ' FROM ' . $table;
+    if(!empty($condition)){
+        $sql .= ' WHERE ' . $condition;
+    }
+    return getRaw($sql);
+}
+
+//Lấy 1 dữ liệu theo table, field, condition
+function getFirst($table, $field = '*', $condition = '')
+{
+    $sql = 'SELECT ' . $field . ' FROM ' . $table;
+    if(!empty($condition)){
+        $sql .= ' WHERE ' . $condition;
+    }
+    return getfirstRaw($sql);
 }
